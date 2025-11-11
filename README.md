@@ -1,5 +1,5 @@
-# CFPB-Complaints Analytics Suite
-Capstone-Style Project on the Consumer Financial Protection Bureau (CFPB) Consumer Complaint Database
+# CFPB- Consumer Complaints Analytics 
+Project on the Consumer Financial Protection Bureau (CFPB) Consumer Complaint Database
 
 ---
 
