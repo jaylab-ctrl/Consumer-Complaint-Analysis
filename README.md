@@ -55,7 +55,7 @@ Capstone-Style Project on the Consumer Financial Protection Bureau (CFPB) Consum
 ---
 
 ## 🧰 Modeling Details
-**Text preprocessing:** lowercasing, punctuation/stopword handling, min-df thresholds; optional lemmatization.  
+**Text preprocessing:** lowercasing, punctuation/stopword handling, optional lemmatization.  
 **Vectorization:** TF–IDF (uni/bi-grams), optional Transformer embeddings for advanced variants.  
 **Class imbalance:** class-weighted losses and/or minority oversampling in training folds.  
 **Validation:** stratified k-fold or train/val/test split with fixed random seeds.  
@@ -64,9 +64,9 @@ Capstone-Style Project on the Consumer Financial Protection Bureau (CFPB) Consum
 ---
 
 ## 📊 Evaluation
-**Classification:** Accuracy, macro-F1, per-class metrics, confusion matrix, ROC/PR curves for one-vs-rest (optional).  
-**Sentiment:** distribution summaries, stability across time, agreement between rule-based and ML variants.  
-**Forecasting:** MAE/MAPE/RMSE on backtests; coverage of prediction intervals; seasonal decomposition checks.
+**Classification:** Accuracy, precison, recall, f1-score (all metrics based on confusion matrix).
+**Sentiment:** sentiment of the complaint (positive/negative/neutral).
+**Forecasting:** coverage of prediction intervals; seasonal decomposition checks.
 
 > Tip: lock a **held-out test month** for time-series (no leakage), and hold out **recent months** to mimic production.
 
