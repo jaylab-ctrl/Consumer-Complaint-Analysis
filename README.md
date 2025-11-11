@@ -20,7 +20,7 @@ Capstone-Style Project on the Consumer Financial Protection Bureau (CFPB) Consum
 `complaint_id`, `date_received`, `product`, `issue`, `sub_issue`, `consumer_complaint_narrative`, `company`, `state`, `submitted_via`, `date_sent_to_company`, `company_response_to_consumer`, `timely_response`, `consumer_disputed`.  
 **Targets (illustrative):**
 - **Response Classification:** `timely_response` (binary; yes or no).
-- **Sentiment Analysis:** polarity score over `consumer_complaint_narrative` (e.g., negative/neutral/positive).
+- **Sentiment Analysis:** polarity tone over `consumer_complaint_narrative` (e.g., negative/neutral/positive).
 - **Time Series:** monthly complaint counts (overall and/or by product/state).  
 
 
