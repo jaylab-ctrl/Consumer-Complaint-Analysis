@@ -73,15 +73,33 @@ constraints.
       because there were no values at all.
 
    Visualizations:
-    - Yearly complaint count ![Pic](assets/yearly complaint count.png)
-    - Monthly complaint count (insert pic)
-    - Top 10 compalaint by products (insert pic)
-    - Complaints by state (insert pic)
-    - Company response (insert pic)
-    - Word Cloud (insert pic)
+    - Yearly complaint count
+      
+      ![Pic](assets/yearly_complaint_count.png)
+      
+    - Monthly complaint count
+
+      ![Pic](assets/monthly_complaint_count.png)
+
+    - Top 10 compalaint by products
+
+      ![Pic](assets/top10compalintprod.png)
+
+    - Complaints by state 
+
+      ![Pic](assets/complaintsstate.png)
+
+    - Company response
+  
+      ![Pic](assets/company_repsonse.png)
+
+    - Word Cloud
+
+      ![Pic](assets/word_cloud_complaints.png)
+
     - Top Complaint by companies (insert pic)
 
-3) **`CFPB_Complaints_Response_Classification.ipynb`**  
+1) **`CFPB_Complaints_Response_Classification.ipynb`**  
    - Text featurization (e.g. One-hot encoding, Standardization of data, data resampling, feature selection)
    - Baselines (XGBoost, 
    - Train/test splits; hyperparameter search using Optuna.  
@@ -101,7 +119,7 @@ constraints.
     performance and generalization, using `SelectKBest` from `chi_sq` hypothesis
   
     **NearMiss Sampling**:
-    It is an undersampling technique used in machine learning to balance imbalanced datasets by removing majority class samples. It works by selecting majority class instances that are closest to the minority class samples, focusing          on the boundary region between the two classes to preserve important information for classification. It is initialized with `version=1` and `n_neighbors=3`.
+    It is an undersampling technique used in machine learning to balance imbalanced datasets by removing majority class samples. It works by selecting majority class instances that are closest to the minority class samples, focusing on the boundary region between the two classes to preserve important information for classification. It is initialized with `version=1` and `n_neighbors=3`.
     `Version 1` of NearMiss selects majority class samples that have the smallest average distance to the k-nearest
     minority class samples. Setting `n_neighbors=3` means it considers the 3 nearest neighbors when making its
     selection. This process creates a new, balanced dataset by undersampling the majority class while keeping all
@@ -109,7 +127,7 @@ constraints.
     be biased towards the majority class, potentially improving overall predictive performance for the consumer
     complaints analysis.
 
-    (insert pic)
+    ![Pic](assets/nearmiss.png)
 
     **Model Selection** (tl;dr):
     - XGBoost: High efficiency and strong performance in classification tasks through gradient boosting with advanced regularization.
@@ -120,22 +138,31 @@ constraints.
   
     **Performance for each of the model shown in the form of confusion matrix**:
      - XgBoost:
-       (insert pic)
+       
+      ![Pic](assets/xgboostcm.png)
+
      - LightGBM:
-       (insert pic)
+       
+      ![Pic](assets/lgbmcm.png)
+
      - Logistc Regression:
-       (insert pic)
+       
+      ![Pic](assets/logregcm.png)
+
      - Random Forest:
-       (insert pic)
+       
+      ![Pic](assets/rfcm.png)
+
      - Decision Tree:
-       (insert pic)
+
+      ![Pic](assets/dtcm.png)
 
     **Hyper Paramter Tuning**:
      I employed Optuna, an open-source hyperparameter optimization framework, to fine-tune multiple
      machine learning models for the CFPB consumer complaints dataset. This approach automates the search for
      optimal hyperparameters, enhancing model performance and efficiency.
 
-     (insert pic)
+     ![Pic](assets/optuna.png)
 
      Optimization Process:
      - Define Hyperparameter Search Space: We specified the range of hyperparameters to explore for each model.
@@ -176,7 +203,7 @@ constraints.
     anonymized data like "xxxx," the word cloud demonstrates that meaningful insights about consumer concerns
     can still be extracted, showcasing the robustness of the preprocessing and sentiment analysis workflow.
 
-    (insert pic)
+    ![Pic](assets/issue_word_cloud.png)
 
    **Model Implementation**:
     The sentiment analysis was performed using FinBERT, a financial text-specific model, integrated into a Hugging
@@ -203,7 +230,7 @@ constraints.
       Its presence further emphasizes the prevalence of personally identifiable information being masked in
       complaints, but it does not diminish the utility of the text for sentiment analysis. 
 
-      (insert pic)
+      ![Pic](assets/neagative_word_cloud.png)
 
     - Positive: The positive sentiment word cloud emphasizes key terms like "credit," "account," "payment," and "consumer,"
       reflecting primary themes in financial management and transactions. Interestingly, words such as "believe,"
@@ -214,7 +241,7 @@ constraints.
       demonstrates that while positive feedback is less common in the dataset, it still centers around similar financial
       themes as other sentiment categories.
 
-      (insert pic)
+      ![Pic](assets/positive_word_cloud.png)
 
     - Neutral: The neutral sentiment word cloud highlights terms such as "credit," "account," "report," and "information,"
       suggesting that these narratives often focus on factual or technical matters rather than emotional responses.
@@ -223,7 +250,7 @@ constraints.
       processes, or interactions with financial institutions. The recurring presence of "xxxx" points to the masking of
       sensitive information in these descriptive or procedural contexts.
 
-      (insert pic)
+      ![Pic](assets/neutral_word_cloud.png)
 
 4) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
    - Aggregate to monthly counts; handle reporting lags and missing months.  
@@ -249,7 +276,7 @@ constraints.
           - MA(1) Coefficient: 0.8164 (statistically significant with p < 0.05).
           - Sigma^2 (residual variance): 2.887×10^6.
 
-      (insert pic)
+      ![Pic](assets/baseline_arima.png)
 
       Fine-Tune: To improve the initial model, a grid search was conducted over the ranges of p ∈ [0,4], d ∈ [0,1], and q ∈
       [0,4]. The best parameters identified were p = 4, d = 1, and q = 3, with an AIC of 10473.52—a significant
@@ -258,38 +285,37 @@ constraints.
       Coefficients for AR(1) through AR(4) and MA(1) through MA(3) were all statistically significant (p < 0.05).
       Residual variance (sigma^2): 1.053×10^6, suggesting improved model performance.
 
-     (insert pic)
+      ![Pic](assets/finetuned_arima.png)
 
-     (insert pic)
+      ![Pic](assets/residual_arima.png)
 
     - Prophet: It is a robust, open-source forecasting tool designed to handle seasonality and trends
       effectively. The data was preprocessed into the required format with columns ds (date) and y (complaints). The
       model captured the historical patterns and extended the forecast into the future while accounting for
       uncertainties, represented by confidence intervals.
 
-      (insert pic)
+      ![Pic](assets/baseline_prophet.png)
 
       Fine-Tune: The fine-tuned model further adjusts the parameters such as changepoint_prior_scale and seasonality_prior_scale
       to enhance accuracy. The fine-tuned forecast graph shows a more refined forecast with narrower confidence
       intervals, indicating reduced uncertainties. Additionally, seasonalities are better captured, highlighting a
       significant periodicity in complaint counts.
 
-      (insert pic)
+      ![Pic](assets/finetuned_prophet.png)
 
-      (insert pic)
+      ![Pic](assets/residual_prophet.png)
 
     - LSTM: The LSTM model, known for its ability to capture temporal dependencies, was applied to the
       time-series data with baseline and fine-tuned configurations. Below, we provide an in-depth explanation of the
       visualizations generated, detailing the model's outputs, the patterns it captured, and the residual analysis.
 
-      (insert pic)
+      ![Pic](assets/baseline_lstm.png)
 
       Fine-Tune: The baseline LSTM model was fine tuned using Grid search. The parameters that were tuned were `{'epochs', 'hidden_size', 'learning_rate', 'num_layers': 1}`.
 
-      (insert pic)
+      ![Pic](assets/finetuned_lstm.png)
 
-      (insert pic)
-
+      ![Pic](assets/residual_lstm.png)
 
 
 ## 📊 Evaluation
