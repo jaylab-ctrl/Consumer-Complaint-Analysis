@@ -196,6 +196,8 @@ constraints.
     FinBERT, a model fine-tuned for financial text, ensuring robust handling of domain-specific language. These
     insights provide a foundation for addressing consumer concerns and enhancing customer service strategies.
 
+   ![Pic](assets/text_length.png)
+
     **Word Cloud Analysis**:
     The word cloud serves as an effective exploratory tool, providing a quick overview of key concerns and topics
     within the complaints. By highlighting common terms, it underscores the focus on financial and
@@ -252,7 +254,7 @@ constraints.
 
       ![Pic](assets/neutral_word_cloud.png)
 
-4) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
+5) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
    - Aggregate to monthly counts; handle reporting lags and missing months.  
    - Benchmarks: naïve seasonal, moving averages; models: SARIMA/Prophet (pick one or both).  
    - Backtests with expanding or rolling windows; prediction intervals.  
