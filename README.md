@@ -237,47 +237,68 @@ constraints.
    series, visualizing trends and seasonality, assessing stationarity, and analyzing autocorrelation and outliers, and
    creating 3 time-series forecasting models: ARIMA, Prophet, and GPU-based LSTM.
 
----
+   **Model Selection:** (No ground truth - so residual plot should show data in a normal distribution aka bell curve)
+   - ARIMA: The ARIMA model is a powerful tool for time-series
+    forecasting, as it combines autoregressive (AR) terms, differencing (I) to make the data stationary, and moving
+    average (MA) terms to model residuals.
 
-## 🧰 Modeling Details
-**Text preprocessing:** lowercasing, punctuation/stopword handling, optional lemmatization.  
-**Vectorization:** TF–IDF (uni/bi-grams), optional Transformer embeddings for advanced variants.  
-**Class imbalance:** class-weighted losses and/or minority oversampling in training folds.  
-**Validation:** stratified k-fold or train/val/test split with fixed random seeds.  
-**Explainability (optional):** linear model coefficients, permutation importances, and example reviews near decision boundaries.
+     - Baseline Reults:
+       - The initial ARIMA model was fit with parameters p = 1, d = 1, and q = 1. The results indicate a significant
+       - Relationship among the AR, MA terms, and residual variance:
+          - AR(1) Coefficient: -0.4567 (statistically significant with p < 0.05).
+          - MA(1) Coefficient: 0.8164 (statistically significant with p < 0.05).
+          - Sigma^2 (residual variance): 2.887×10^6.
 
----
+      (insert pic)
+
+      Fine-Tune: To improve the initial model, a grid search was conducted over the ranges of p ∈ [0,4], d ∈ [0,1], and q ∈
+      [0,4]. The best parameters identified were p = 4, d = 1, and q = 3, with an AIC of 10473.52—a significant
+      improvement over the initial model. The fine-tuned ARIMA(4, 1, 3) model provided the following:
+   
+      Coefficients for AR(1) through AR(4) and MA(1) through MA(3) were all statistically significant (p < 0.05).
+      Residual variance (sigma^2): 1.053×10^6, suggesting improved model performance.
+
+     (insert pic)
+
+     (insert pic)
+
+    - Prophet: It is a robust, open-source forecasting tool designed to handle seasonality and trends
+      effectively. The data was preprocessed into the required format with columns ds (date) and y (complaints). The
+      model captured the historical patterns and extended the forecast into the future while accounting for
+      uncertainties, represented by confidence intervals.
+
+      (insert pic)
+
+      Fine-Tune: The fine-tuned model further adjusts the parameters such as changepoint_prior_scale and seasonality_prior_scale
+      to enhance accuracy. The fine-tuned forecast graph shows a more refined forecast with narrower confidence
+      intervals, indicating reduced uncertainties. Additionally, seasonalities are better captured, highlighting a
+      significant periodicity in complaint counts.
+
+      (insert pic)
+
+      (insert pic)
+
+    - LSTM: The LSTM model, known for its ability to capture temporal dependencies, was applied to the
+      time-series data with baseline and fine-tuned configurations. Below, we provide an in-depth explanation of the
+      visualizations generated, detailing the model's outputs, the patterns it captured, and the residual analysis.
+
+      (insert pic)
+
+      Fine-Tune: The baseline LSTM model was fine tuned using Grid search. The parameters that were tuned were `{'epochs', 'hidden_size', 'learning_rate', 'num_layers': 1}`.
+
+      (insert pic)
+
+      (insert pic)
+
+
 
 ## 📊 Evaluation
 **Classification:** Accuracy, precison, recall, f1-score (all metrics based on confusion matrix).
 **Sentiment:** sentiment of the complaint (positive/negative/neutral).
-**Forecasting:** coverage of prediction intervals; seasonal decomposition checks.
-
-> Tip: lock a **held-out test month** for time-series (no leakage), and hold out **recent months** to mimic production.
+**Forecasting:** coverage of prediction on 6 month interval - baseline and fine tuned, with moajor aprt of evaulation to see whther the distribution is normal distribution.
 
 ---
 
-## ⚙️ Setup
-**Python:** 3.9+ recommended • **GPU:** optional (for Transformer variants)
-
-```bash
-pip install pandas numpy scikit-learn matplotlib seaborn plotly nltk textblob statsmodels prophet==1.1.*
-python -c "import nltk; nltk.download('punkt'); nltk.download('vader_lexicon')"
-```
-
-- If using Prophet on some systems: `pip install prophet` may require a recent `pystan`/`cmdstanpy` stack.  
-- If using Transformer embeddings: also `pip install transformers torch accelerate` and ensure a compatible PyTorch build.
-
----
-
-## 🚀 Usage
-
-### Open notebooks
-```bash
-jupyter lab
-# or
-jupyter notebook
-```
 
 ### Typical flows
 - **EDA:** run sections top-to-bottom to profile data health and distributions.  
