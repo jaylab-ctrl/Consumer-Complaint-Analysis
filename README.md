@@ -98,6 +98,8 @@ constraints.
       ![Pic](assets/word_cloud_complaints.png)
 
     - Top Complaint by companies (insert pic)
+  
+      ![Pic](assets/topcompanies.png)
 
 1) **`CFPB_Complaints_Response_Classification.ipynb`**  
    - Text featurization (e.g. One-hot encoding, Standardization of data, data resampling, feature selection)
@@ -212,14 +214,12 @@ constraints.
     analyzing 32 records at a time. To accommodate FinBERT's 512-token limit, text is truncated, balancing
     efficiency with information preservation.
 
-    (insert pic)
-
     **Results**:
     The results indicate a heavy skew toward neutral sentiment, with 733,952 entries classified as neutral, followed
     by 212,383 as negative, and 5,349 as positive. This distribution aligns with the nature of consumer complaints,
     which often contain descriptive language rather than overtly emotional tones.
 
-    (insert pic)
+    ![Pic](assets/distribution_sentiment.png)
 
     **Word Clouds for each Sentiment**:
      - Negative: The word cloud for narratives with negative sentiment highlights the most frequently used words in complaints
