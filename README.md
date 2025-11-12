@@ -43,7 +43,7 @@ narrative (Boolean)
 - Dataset Statistics:
   - Number of records: ~6 million complaints, but reduced to 3.1 million complaints, because of storage
 constraints.
-  - Number of features: 13 attributes, but after one-hot-encoding its increased to 455 features.
+  - Number of features: 18 attributes, but after one-hot-encoding its increased to 455 features.
   - Data source: Consumer Complaint Database (publicly available data.
     
 **Targets:**
