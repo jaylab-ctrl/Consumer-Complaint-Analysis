@@ -4,21 +4,49 @@ Project on the Consumer Financial Protection Bureau (CFPB) Consumer Complaint Da
 ---
 
 ## 🔎 Executive Summary
-**Data:** Public CFPB Consumer Complaint Database with free-text complaint narratives and structured fields (product, issue, company, state, dates, response).  
-**Challenge:** Unstructured narratives, evolving label definitions, class imbalance, and calendar effects.  
-**Solution:** A four-notebook workflow that explores the data (EDA), builds a **response classification** model, performs **sentiment analysis** on narratives, and **forecasts complaint volume** with time-series methods.  
-**Highlights**
-- End-to-end, notebook-first workflow for analysis → modeling → evaluation → forecasting.
-- Text pipeline centered on complaint narratives; balanced training batches and stratified splits where applicable.
-- Clear outputs: confusion matrices, feature importances, sentiment distributions, and monthly forecasts with confidence intervals.
+**Problem Statement:** The financial services industry has been receiving complaints from consumers regarding various issues such as
+fraudulent transactions, poor customer service, and unresponsive companies.
+These complaints, collected in the CFPB Consumer Complaint Database, need to be analyzed to identify
+patterns and trends that can inform better regulatory decisions and provide companies with actionable insights.
+- Problem:
+How can we leverage data analytics and machine learning to identify trends and patterns in consumer financial
+complaints to improve regulatory oversight and enhance consumer protection?
+This problem is significant for policymakers, financial institutions, consumer rights advocates, and consumers
+themselves. CFPB regulators can use the analysis to monitor the performance of financial institutions, while
+companies can identify areas to improve customer service. The sheer volume of structured and unstructured
+data, including the complaint narratives, product categories, and company responses, makes it a task best suited
+for data analytics. Machine learning models can help categorize complaints, predict future trends, and provide
+actionable insights from both structured and text data.
+
 
 ---
 
 ## 📦 Data & Taxonomy
-**Source:** CFPB Consumer Complaint Database (public).  
-**Core fields used (typical):**  
-`complaint_id`, `date_received`, `product`, `issue`, `sub_issue`, `consumer_complaint_narrative`, `company`, `state`, `submitted_via`, `date_sent_to_company`, `company_response_to_consumer`, `timely_response`, `consumer_disputed`.  
-**Targets (illustrative):**
+**Data:** I am using the Consumer Complaint Database from the CFPB, which is updated daily and
+includes complaints related to various financial products. We are using the data from 01/01/2023 to 10/04/2024.
+- Data Attributes:
+1. Date CFPB received the complaint (Date)
+2. Product/sub-product: The financial product the consumer identified in the complaint (Categorical)
+3. Issue/sub-issue: The specific issue the consumer reported (Categorical)
+4. State: State of residence of the consumer (Categorical)
+5. ZIP code: ZIP code provided by the consumer (Categorical)
+6. Company name: Company the complaint is about (Categorical)
+7. Timely response: Whether the company provided a timely response (Boolean)
+8. Company response: How the company responded to the complaint (Categorical)
+9. Public company response: Optional public response from the company (Text)
+10. Date complaint sent to company (Date)
+11. Consumer consent to publish narrative: Whether the consumer consented to publishing their
+narrative (Boolean)
+12. Submission method: How the complaint was submitted to CFPB (Categorical)
+13. Tags: Additional tags for categorization (Categorical)
+
+- Dataset Statistics:
+  - Number of records: ~6 million complaints, but reduced to 3.1 million complaints, because of storage
+constraints.
+  - Number of features: 13 attributes, but after one-hot-encoding its increased to 455 features.
+  - Data source: Consumer Complaint Database (publicly available data.
+    
+**Targets:**
 - **Response Classification:** `timely_response` (binary; yes or no).
 - **Sentiment Analysis:** polarity tone over `consumer_complaint_narrative` (e.g., negative/neutral/positive).
 - **Time Series:** monthly complaint counts (overall and/or by product/state).  
@@ -30,23 +58,43 @@ Project on the Consumer Financial Protection Bureau (CFPB) Consumer Complaint Da
 1) **`CFPB_Complaints_EDA.ipynb`**  
    - Load and clean data; sanity checks and missingness.  
    - Distribution plots for *product, issue, state, company*.  
-   - Narrative length stats; word clouds / top n-grams (optional).  
+   - Narrative length stats; word clouds.  
    - Calendar views: monthly trend, seasonality, and outliers.
+  
+   Preprocessing Steps
+   Data Cleaning:
+    - Since the dataset was pretty large, like approx. 6 million complaints, we had to chunk our data into
+      400,000 instances for each chunk. Each chunk (400000, 18) was loaded into the pandas DataFrame and
+      then concatenated row-wise.
+    - There were 16 categorical columns and 2 numerical features, and these categorical features were
+      converted to “category,” and the date features were converted to “date-time.”
+    - We calculated the “NaN” values and found out there were 4 features where “NaN” values had more than
+      50%. These are subsequently dropped. There were also some features where we had to add a category
+      because there were no values at all.
 
-2) **`CFPB_Complaints_Response_Classification.ipynb`**  
+   Visualizations:
+    - Yearly complaint count (insert pic)
+    - Monthly complaint count (insert pic)
+    - Top 10 compalaint by products (insert pic)
+    - Complaints by state (insert pic)
+    - Company response (insert pic)
+    - Word Cloud (insert pic)
+    - Top Complaint by companies (insert pic)
+
+3) **`CFPB_Complaints_Response_Classification.ipynb`**  
    - Text featurization (e.g., TF–IDF over unigrams/bigrams; optional Transformer embeddings).  
    - Baselines (Logistic Regression / Linear SVM) with class weights; optional Gradient Boosting.  
    - Train/validation/test with **stratified** splits; hyperparameter search (grid or randomized).  
    - **Metrics:** Accuracy, macro-Precision/Recall/F1; per-class confusion matrices and classification report.  
    - Export predictions and model artifacts (vectorizer + model) for reuse.
 
-3) **`CFPB_Complaints_Sentiment_Analysis.ipynb`**  
+4) **`CFPB_Complaints_Sentiment_Analysis.ipynb`**  
    - Rule-based (e.g., VADER) and/or ML-based sentiment on `consumer_complaint_narrative`.  
    - Compare distributions by product, company, channel, and geography.  
    - Correlate sentiment with downstream labels (e.g., response type, timely_response).  
    - Visualize **sentiment drift** across time and cohorts.
 
-4) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
+5) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
    - Aggregate to monthly counts; handle reporting lags and missing months.  
    - Benchmarks: naïve seasonal, moving averages; models: SARIMA/Prophet (pick one or both).  
    - Backtests with expanding or rolling windows; prediction intervals.  
