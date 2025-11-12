@@ -156,11 +156,9 @@ constraints.
           c. Complete trial history for analysis
      
     
-5) **`CFPB_Complaints_Sentiment_Analysis.ipynb`**  
-   - Rule-based (e.g., VADER) and/or ML-based sentiment on `consumer_complaint_narrative`.  
-   - Compare distributions by product, company, channel, and geography.  
-   - Correlate sentiment with downstream labels (e.g., response type, timely_response).  
-   - Visualize **sentiment drift** across time and cohorts.
+3) **`CFPB_Complaints_Sentiment_Analysis.ipynb`**  
+   - ML-based sentiment on `consumer_complaint_narrative` using FinBERT.    
+   - Visualize **sentiment drift** across sentiments.
 
     In this section of the report, sentiment analysis is conducted on a dataset of consumer complaints to uncover
     patterns and themes in the textual narratives. The analysis begins with preprocessing steps like handling missing
@@ -187,13 +185,57 @@ constraints.
     analyzing 32 records at a time. To accommodate FinBERT's 512-token limit, text is truncated, balancing
     efficiency with information preservation.
 
-  (insert pic)
+    (insert pic)
 
-7) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
+    **Results**:
+    The results indicate a heavy skew toward neutral sentiment, with 733,952 entries classified as neutral, followed
+    by 212,383 as negative, and 5,349 as positive. This distribution aligns with the nature of consumer complaints,
+    which often contain descriptive language rather than overtly emotional tones.
+
+    (insert pic)
+
+    **Word Clouds for each Sentiment**:
+     - Negative: The word cloud for narratives with negative sentiment highlights the most frequently used words in complaints
+      classified as negative. Key terms like "credit," "account," "report," and "consumer" dominate the visualization,
+      reflecting the dataset's primary focus on financial issues. Words such as "fraudulent," "late," "inaccurate," and
+      "payment" suggest that common grievances relate to delayed or incorrect reporting, fraudulent activities, and
+      payment disputes. The placeholder "xxxx" also appears prominently, as it represents anonymized consumer data.
+      Its presence further emphasizes the prevalence of personally identifiable information being masked in
+      complaints, but it does not diminish the utility of the text for sentiment analysis. 
+
+      (insert pic)
+
+    - Positive: The positive sentiment word cloud emphasizes key terms like "credit," "account," "payment," and "consumer,"
+      reflecting primary themes in financial management and transactions. Interestingly, words such as "believe,"
+      "please," and "take" suggest courteous language, potentially indicating customer satisfaction or appreciation in
+      dispute resolution or successful transactions. "Report" and "information" also feature prominently, hinting at
+      positive feedback related to clear reporting or accurate information provision. The frequent appearance of "xxxx"
+      likely represents redacted sensitive data, maintaining its presence even in positive narratives. This visualization
+      demonstrates that while positive feedback is less common in the dataset, it still centers around similar financial
+      themes as other sentiment categories.
+
+      (insert pic)
+
+    - Neutral: The neutral sentiment word cloud highlights terms such as "credit," "account," "report," and "information,"
+      suggesting that these narratives often focus on factual or technical matters rather than emotional responses.
+      Words like "agency," "items," "states," and "section" indicate that neutral feedback frequently involves
+      regulatory, procedural, or informational aspects. These narratives likely pertain to account details, reporting
+      processes, or interactions with financial institutions. The recurring presence of "xxxx" points to the masking of
+      sensitive information in these descriptive or procedural contexts.
+
+      (insert pic)
+
+4) **`CFPB_Complaints_Time_Series_Forecasting.ipynb`**  
    - Aggregate to monthly counts; handle reporting lags and missing months.  
    - Benchmarks: naïve seasonal, moving averages; models: SARIMA/Prophet (pick one or both).  
    - Backtests with expanding or rolling windows; prediction intervals.  
    - Scenario views: overall, by product, and top states/companies.
+  
+   In this section, we analyze the Consumer Financial Protection Bureau (CFPB) complaints data to explore
+   time-series patterns, verify data completeness, and prepare it for future forecasting models. The process involves
+   several steps, including verifying the dataset's temporal coverage, identifying missing dates, creating a time
+   series, visualizing trends and seasonality, assessing stationarity, and analyzing autocorrelation and outliers, and
+   creating 3 time-series forecasting models: ARIMA, Prophet, and GPU-based LSTM.
 
 ---
 
