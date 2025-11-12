@@ -49,7 +49,7 @@ constraints.
 **Targets:**
 - **Response Classification:** `timely_response` (binary; yes or no).
 - **Sentiment Analysis:** polarity tone over `consumer_complaint_narrative` (e.g., negative/neutral/positive).
-- **Time Series:** monthly complaint counts (overall and/or by product/state).  
+- **Time Series:** prediction of monthly complaint counts over the next 6 months.  
 
 
 ---
