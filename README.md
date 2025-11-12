@@ -82,11 +82,19 @@ constraints.
     - Top Complaint by companies (insert pic)
 
 3) **`CFPB_Complaints_Response_Classification.ipynb`**  
-   - Text featurization (e.g., TF–IDF over unigrams/bigrams; optional Transformer embeddings).  
-   - Baselines (Logistic Regression / Linear SVM) with class weights; optional Gradient Boosting.  
-   - Train/validation/test with **stratified** splits; hyperparameter search (grid or randomized).  
-   - **Metrics:** Accuracy, macro-Precision/Recall/F1; per-class confusion matrices and classification report.  
-   - Export predictions and model artifacts (vectorizer + model) for reuse.
+   - Text featurization (e.g. One-hot encoding, Standardization of data, data resampling, feature selection)
+   - Baselines (XGBoost, 
+   - Train/test splits; hyperparameter search using Optuna.  
+   - Metrics:Accuracy, Precision/Recall/F1; per-class confusion matrices and classification report.  
+
+  In this section, we analyze the Consumer Financial Protection Bureau (CFPB) complaints data to predict whether
+  a financial institution will provide a timely response to a consumer complaint. Our analysis focuses on
+  developing a classification model to forecast the likelihood of a timely response, which is crucial for
+  understanding and improving customer service in the financial sector. By leveraging various features from the
+  complaint data, such as the type of financial product, the company involved, and the nature of the complaint, we
+  aim to create a predictive model that can help identify factors influencing response times and potentially assist
+  both consumers and financial institutions in managing expectations and improving complaint resolution
+  processes.
 
 4) **`CFPB_Complaints_Sentiment_Analysis.ipynb`**  
    - Rule-based (e.g., VADER) and/or ML-based sentiment on `consumer_complaint_narrative`.  
