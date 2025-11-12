@@ -73,7 +73,7 @@ constraints.
       because there were no values at all.
 
    Visualizations:
-    - Yearly complaint count (insert pic)
+    - Yearly complaint count ![Pic](assets/yearly complaint count.png)
     - Monthly complaint count (insert pic)
     - Top 10 compalaint by products (insert pic)
     - Complaints by state (insert pic)
